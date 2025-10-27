@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ categoria.Nombre }} | P-Chop{% endblock %}
+
+{% block contenido %}
+<article class="detail-container">
+    <div class="detail-banner">
+        {% if categoria.icono %}
+            <img src="{{ categoria.icono.url }}" alt="Icono de {{ categoria.Nombre }}" class="detail-photo">
+        {% else %}
+            <div class="detail-placeholder">🏷️</div>
+        {% endif %}
+        <div class="detail-info">
+            <h1>{{ categoria.Nombre }} {% if categoria.es_principal %}<span class="badge-principal">Principal</span>{% endif %}</h1>
+            <p class="detail-stock">Fecha de Creación: {{ categoria.fecha_creacion|date:"d M Y" }}</p>
+        </div>
+    </div>
+
+    <section class="detail-description">
+        <h2>Descripción</h2>
+        <p>{{ categoria.Descripcion }}</p>
+    </section>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_PChop:editar_categoria' categoria.id %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_PChop:borrar_categoria' categoria.id %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+
+    <hr>
+    
+    <section class="related-items-section">
+        <h2>Productos en esta Categoría ({{ productos.count }})</h2>
+        {% if productos %}
+        <ul class="item-list-simple">
+            {% for producto in productos %}
+            <li><a href="{% url 'app_PChop:detalle_producto' producto.id %}">{{ producto.Nombre }} - ${{ producto.Precio }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-message">No hay productos asociados a esta categoría.</p>
+        {% endif %}
+    </section>
+</article>
+{% endblock %}

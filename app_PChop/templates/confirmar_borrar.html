@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block titulo %}Eliminar {{ tipo }} | P-Chop{% endblock %}
+
+{% block contenido %}
+<div class="confirm-delete">
+    <h2>¿Estás seguro de que quieres borrar el {{ tipo }} "{{ objeto.Nombre }}"?</h2>
+    <p>Esta acción es irreversible y podría borrar objetos relacionados (si es una Categoría). </p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="actions">
+            <button type="submit" class="btn btn-danger">Sí, Borrar</button>
+            <a href="javascript:history.back()" class="btn">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block titulo %}Categorías | P-Chop{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Listado de Categorías</h2>
+    <a href="{% url 'app_PChop:crear_categoria' %}" class="btn btn-secondary">+ Nueva Categoría</a>
+</div>
+<ul class="category-list">
+    {% for categoria in categorias %}
+    <li class="category-item">
+        <a href="{% url 'app_PChop:detalle_categoria' categoria.id %}" class="category-link">
+            {% if categoria.icono %}
+                <img src="{{ categoria.icono.url }}" alt="Icono" class="category-icon">
+            {% else %}
+                <span class="category-icon-placeholder">🏷️</span>
+            {% endif %}
+            <div>
+                <h3>{{ categoria.Nombre }} {% if categoria.es_principal %}<span class="badge-principal">Principal</span>{% endif %}</h3>
+                <p>{{ categoria.Descripcion|truncatechars:100 }}</p>
+            </div>
+            
+        </a>
+        <a href="{% url 'app_PChop:editar_categoria' categoria.id %}" class="btn btn-edit">✏️</a>
+    </li>
+    {% empty %}
+    <li class="no-items">No hay categorías registradas.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

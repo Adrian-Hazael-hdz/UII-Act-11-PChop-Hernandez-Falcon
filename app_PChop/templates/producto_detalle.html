@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ producto.Nombre }} | P-Chop{% endblock %}
+
+{% block contenido %}
+<article class="detail-container">
+    <div class="detail-banner">
+        {% if producto.URL_imagen %}
+            <img src="{{ producto.URL_imagen.url }}" alt="Imagen de {{ producto.Nombre }}" class="detail-photo">
+        {% else %}
+            <div class="detail-placeholder">📦</div>
+        {% endif %}
+        <div class="detail-info">
+            <h1>{{ producto.Nombre }}</h1>
+            <p class="detail-category">Categoría: <a href="{% url 'app_PChop:detalle_categoria' producto.categoria.id %}" class="link-style">{{ producto.categoria.Nombre }}</a></p>
+            <h3 class="detail-price">${{ producto.Precio }}</h3>
+            <p class="detail-stock">Stock: {{ producto.Stock }} unidades</p>
+        </div>
+    </div>
+
+    <section class="detail-description">
+        <h2>Descripción</h2>
+        <p>{{ producto.Descripcion }}</p>
+    </section>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_PChop:editar_producto' producto.id %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_PChop:borrar_producto' producto.id %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+</article>
+{% endblock %}

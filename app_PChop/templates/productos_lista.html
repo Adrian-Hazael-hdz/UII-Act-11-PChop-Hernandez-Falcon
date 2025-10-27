@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block titulo %}Productos | P-Chop{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Catálogo de Productos</h2>
+    <a href="{% url 'app_PChop:crear_producto' %}" class="btn btn-primary">+ Agregar Producto</a>
+</div>
+<ul class="item-grid">
+    {% for producto in productos %}
+    <li class="item-card">
+        <a href="{% url 'app_PChop:detalle_producto' producto.id %}" class="item-link">
+            {% if producto.URL_imagen %}
+                <img src="{{ producto.URL_imagen.url }}" alt="{{ producto.Nombre }}" class="item-img">
+            {% else %}
+                <div class="item-placeholder">📦</div>
+            {% endif %}
+            
+            <div class="item-content">
+                <h3>{{ producto.Nombre }}</h3>
+                <p class="item-category">
+                    Categoría: 
+                    <a href="{% url 'app_PChop:detalle_categoria' producto.categoria.id %}" class="link-style">
+                        {{ producto.categoria.Nombre }}
+                    </a>
+                </p>
+                <p class="item-price">${{ producto.Precio }}</p>
+            </div>
+        </a>
+    </li>
+    {% empty %}
+    <li class="no-items">No hay productos registrados.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
